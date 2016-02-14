@@ -1,0 +1,32 @@
+<div class="spinner" ng-show="!seasons.$resolved" layout="row" layout-align="center center">
+	<md-progress-circular md-mode="indeterminate" md-diameter="96" layout-align="center center"></md-progress-circular>
+</div>
+<div layout="row" id="SiteHome" ng-hide="!seasons.$resolved">
+	<div flex>
+		<div layout="row" layout-align="center center">
+			<md-card flex flex-gt-sm="90" flex-gt-md="80" class="md-default-theme">
+				<md-card-header>
+					<h2>Leagues</h2>
+					<span flex></span>
+					<md-input-container>
+						<label for="yearSelector">Select year:</label>
+						<md-select id="yearSelector" ng-model="selectedYear" ng-change="switchYear()" ng-model-options="{trackBy: '$value.id'}" placeholder="Select a year">
+							<md-option ng-model="yearsAvailable" ng-value="year" ng-repeat="year in yearsAvailable">{{year.name}}</md-option>
+				   		</md-select>
+					</md-input-container>
+				</md-card-header>
+				<md-card-content>
+					<md-list role="list">
+						<md-item ng-repeat="season in seasons" class="ng-scope" role="listitem">
+							<md-item-content>
+								<div class="md-tile-content">
+									<md-button ng-href="#season/{{season.id}}">{{season.caption}}</md-button>
+								</div>
+							</md-item-content>
+					    </md-item>
+				    </md-list>
+				</md-card-content>
+		    </md-card>
+	    </div>
+    </div>
+</div>

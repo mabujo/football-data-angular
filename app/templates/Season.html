@@ -1,0 +1,118 @@
+<div class="spinner" ng-show="!leagueTable.$resolved" layout="row" layout-align="center center">
+	<md-progress-circular md-mode="indeterminate" md-diameter="96" layout-align="center center"></md-progress-circular>
+</div>
+<div id="Season" ng-cloak ng-hide="!leagueTable.$resolved">
+	<md-card layout-margin>
+		<md-tabs md-dynamic-height md-border-bottom>
+			<md-tab label="Info">
+				<md-content class="md-padding" layout="column">
+					<h2 class="md-headline">{{leagueTable.leagueCaption}}</h2>
+					<span class="md-subhead">Week {{leagueTable.matchday}} of {{singleSeason.numberOfMatchdays}}</span>
+					<span>Teams : {{singleSeason.numberOfTeams}}</span>
+					<span>Number of games : {{singleSeason.numberOfGames}}</span>
+					<span>Last update : {{singleSeason.lastUpdated | date:'medium'}}</span>
+				</md-content>
+			</md-tab>
+			<md-tab label="Table">
+				<div ng-show="leagueTable.$resolved">
+					<div class="no-data-hide" ng-hide="leagueTable.standing.length > 0">
+						Sorry, we don't have a league table for this season.
+					</div>
+				</div>
+				<div ng-hide="!leagueTable.standing.length > 0">
+					<md-card-title>
+						<md-card-title-text>
+							<h2 class="md-headline">{{leagueTable.leagueCaption}} table</h2>
+							<span class="md-subhead">Week {{leagueTable.matchday}} of {{singleSeason.numberOfMatchdays}}</span>
+						</md-card-title-text>
+					</md-card-title>
+					<table id="league-table" layout="column">
+						<thead>
+							<tr class="league-table-head" layout="row">
+								<th flex="5">#</th>
+								<th flex>Team</th>
+								<th flex>Played</th>
+								<th hide show-sm show-gt-sm show-md show-gt-md show-lg show-gt-lg show-xl flex>Goals for</th>
+								<th hide show-sm show-gt-sm show-md show-gt-md show-lg show-gt-lg show-xl flex>Goals against</th>
+								<th flex>Goal difference</th>
+								<th hide show-lg show-gt-lg show-xl flex="10">Wins</th>
+								<th hide show-lg show-gt-lg show-xl flex="10">Draws</th>
+								<th hide show-lg show-gt-lg show-xl flex="10">Losses</th>
+								<th flex="7">Points</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="league-table-row" ng-repeat="standing in leagueTable.standing" layout="row">
+								<td flex="5">{{standing.position}}</td>
+								<td flex class="league-table-row-team"><img class="league-table-crest" hide show-lg show-gt-lg show-xl ng-src="{{standing.crestURI}}" alt="{{standing.teamName}}" ng-hide="{{!standing.crestURI}}">{{standing.teamName}}</td>
+								<td flex>{{standing.playedGames}}</td>
+								<td hide show-sm show-gt-sm show-md show-gt-md show-lg show-gt-lg show-xl flex>{{standing.goals}}</td>
+								<td hide show-sm show-gt-sm show-md show-gt-md show-lg show-gt-lg show-xl flex>{{standing.goalsAgainst}}</td>
+								<td flex>{{standing.goalDifference}}</td>
+								<td hide show-lg show-gt-lg show-xl flex="10">{{standing.wins}}</td>
+								<td hide show-lg show-gt-lg show-xl flex="10">{{standing.draws}}</td>
+								<td hide show-lg show-gt-lg show-xl flex="10">{{standing.losses}}</td>
+								<td flex="7">{{standing.points}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</md-tab>
+			<md-tab label="Fixtures">
+				<md-content class="md-padding" layout="column">
+					<h2 class="md-headline">{{leagueTable.leagueCaption}} fixtures</h2>
+					<div layout="column">
+						<div class="fixture" ng-repeat="fixture in fixtures.fixtures | filter:'!FINISHED'" layout="row">
+							<span flex>{{fixture.homeTeamName}}</span>
+							<span flex>{{fixture.date | date:'MMM d, y H:mm'}}</span>
+							<span flex>{{fixture.awayTeamName}}</span>
+						</div>
+					</div>
+				</md-content>
+			</md-tab>
+			<md-tab label="Results">
+				<md-content class="md-padding" layout="column">
+					<h2 class="md-headline">{{leagueTable.leagueCaption}} results</h2>
+					<div class="result" ng-repeat="fixture in fixtures.fixtures | filter:'!TIMED'" layout="row">
+							<span class="fixture-detail fixture-detail-team" flex>{{fixture.homeTeamName}}</span>
+							<div class="fixture-detail" flex layout="column">
+								<span flex>{{fixture.date | date:'MMM d, y H:mm'}}</span>
+								<span flex>{{fixture.result.goalsHomeTeam}} : {{fixture.result.goalsAwayTeam}}</span>
+							</div>
+							<span class="fixture-detail fixture-detail-team" flex>{{fixture.awayTeamName}}</span>
+					</div>
+				</md-content>
+			</md-tab>
+		</md-tabs>
+	</md-card>
+	<div class="spinner" ng-show="!teams.$resolved" layout="row" layout-align="center center">
+		<md-progress-circular md-mode="indeterminate" md-diameter="96" layout-align="center center"></md-progress-circular>
+	</div>
+	<div id="Teams" ng-hide="!teams.$resolved">
+		<md-grid-list
+			md-cols-xs="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4"
+			md-row-height-gt-md="300px" md-row-height="300px"
+			md-gutter="10px" md-gutter-gt-sm="8px">
+			<md-grid-tile md-card
+				md-rowspan="1" md-colspan="1" md-colspan-sm="1"
+				ng-repeat="team in teams.teams | orderObjectBy:'name'">
+				<md-card>
+					{{teamId = (team._links.self.href | teamIdFromUrl);"" }}
+					<md-card-title>
+						<md-card-title-text>
+							<span class="md-headline">{{team.name}}</span>
+							<span class="md-subhead" ng-hide="{{!team.squadMarketValue}}">Squad market value : {{team.squadMarketValue}}</span>
+						</md-card-title-text>
+						<md-card-title-media>
+							<div class="md-media-lg card-media"><img class="team-list-image" ng-src="{{team.crestUrl}}" alt="{{team.name}}" ng-hide="{{!team.crestUrl}}"></div>
+						</md-card-title-media>
+					</md-card-title>
+					<md-card-actions layout="row" layout-align="end center">
+						<md-button ng-href="#fixtures/{{teamId}}">Fixtures</md-button>
+						<md-button ng-href="#players/{{teamId}}">Players</md-button>
+					</md-card-actions>
+				</md-card>
+			</md-grid-tile>
+		</md-grid-list>
+	</div>
+</div>

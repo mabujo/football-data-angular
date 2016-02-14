@@ -1,0 +1,43 @@
+<div class="spinner" ng-show="!players.$resolved" layout="row" layout-align="center center">
+	<md-progress-circular md-mode="indeterminate" md-diameter="96" layout-align="center center"></md-progress-circular>
+</div>
+<div id="Players" ng-hide="!players.$resolved">
+	<div style="padding: 0 16px;" layout="row" >
+		<div>
+			<h2 class="md-display-1">{{team.name}}</h2>
+			<span class="team-player-total-value" ng-hide="{{!team.squadMarketValue}}">Total market value : {{team.squadMarketValue}}</span>
+		</div>
+		<span flex></span>
+		<img class="team-player-image" ng-src="{{team.crestUrl}}" alt="{{team.name}}">
+	</div>
+		<div class="no-data-hide" ng-hide="players.players.length > 0">
+			Sorry, we don't have player information for {{team.name}}.
+		</div>
+		<md-grid-list
+			md-cols-xs="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4"
+			md-row-height-gt-md="250px" md-row-height="250px"
+			md-gutter="10px" md-gutter-gt-sm="8px" ng-cloak>
+			<md-grid-tile md-card
+				md-rowspan="1" md-colspan="1" md-colspan-sm="1"
+				ng-repeat="player in players.players | orderObjectBy:'jerseyNumber'" ng-cloak>
+				<md-card flex layout="row" layout-wrap layout-align="center center">
+					<div class="md-tile-left squad-number" >{{player.jerseyNumber}}</div>
+					<md-card-title flex>
+						<md-card-title-text>
+							<span class="md-headline">{{player.name}}</span>
+							<div flex layout="row">
+								<span class="md-subhead" flex>Value : {{player.marketValue}}</span>
+								<span class="md-subhead" flex>Position : {{player.position}}</span>
+							</div>
+							<div flex layout="row">
+								<span class="md-subhead" flex>DOB : {{player.dateOfBirth}}</span>
+								<span class="md-subhead" flex>Contract to : {{player.contractUntil}}</span>
+							</div>
+								<span class="md-subhead" flex>Nationality : {{player.nationality}}</span>
+						</md-card-title-text>
+					</md-card-title>
+				</md-card>
+			</md-grid-tile>
+		</md-grid-list>
+
+</div>

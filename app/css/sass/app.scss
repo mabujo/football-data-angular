@@ -1,0 +1,98 @@
+/* colors */
+$grey: #eee;
+$nearWhite: #fefefe;
+$accent: #19A69A;
+
+/* mixins */
+@mixin border-radius($radius: 3px) {
+	border-radius: $radius;
+	background-clip: padding-box;
+}
+
+.spinner { width: 100%; height:100%; padding: 200px 0; }
+.ng-cloak, [ng-cloak]
+{
+	display: none !important;
+}
+.no-data-hide {
+	padding: 16px;
+}
+md-content.md-default-theme {
+  background-color: $grey;
+}
+md-card {
+  background-color: #fff;
+  h2:first-of-type {
+    margin-top: 0;
+  }
+}
+
+h2 {
+  font-weight: 400;
+}
+.team-list-image { max-height: 152px; }
+.team-player-image { max-height: 100px; padding-top: 20px; }
+.team-player-total-value { margin-top: -5px; display: block; }
+
+/* League tables */
+#league-table {
+	padding: 0 8px;
+}
+.league-table-head {
+	padding: 16px 0;
+	border-bottom: 1px solid #E6E6E6;
+	color: #828282;
+	font-size: 0.75em;
+	text-align: left;
+}
+.league-table-row {
+	padding: 16px 0;
+	border-bottom: 1px solid #f3f3f3;
+}
+.league-table-row:hover, .fixture:hover, .result:hover {
+	background-color: rgba(63, 81, 181, 0.04);
+}
+.league-table-row td {
+	text-align: center;
+	text-align: left;
+	font-size: 0.8em;
+	color: #808080;
+}
+.league-table-row-team {
+	font-weight: 700;
+}
+.league-table-crest {
+	max-height: 26px;
+    max-width: 26px;
+    display: inline;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+/* fixture */
+.fixture, .result {
+	text-align: center;
+	padding: 16px;
+	border-bottom: 1px solid #f3f3f3;
+}
+.fixture-detail-team {
+	margin-top: 10px;
+}
+
+/* players */
+.squad-number {
+	width: 45px;
+	height: 45px;
+	height: 45px;
+	line-height: 45px;
+	margin: 0 5%;
+	vertical-align: middle;
+	text-align: center;
+	background-color: $accent;
+	color: $nearWhite;
+	@include border-radius(50%);
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+#Players.ng-hide-add, #Players.ng-hide-remove {
+  transition: 0.5s linear all;
+}

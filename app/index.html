@@ -1,0 +1,30 @@
+<!doctype html>
+<html ng-app="footballData">
+<head ng-controller="PageAttributesController">
+    <base href="/football-data-angular/app/"/>
+    <link rel="stylesheet" href="dist/css/angular-material.min.css">
+    <link rel="stylesheet" href="dist/css/app.css">
+    <meta name="viewport" content="width=device-width">
+    <title ng-bind="pageAttributes.title()"></title>
+</head>
+
+<body layout="row" ng-cloak class="ng-cloak">
+
+<div layout="column" layout-fill>
+    <md-toolbar ng-controller="MainMenuController">
+        <div class="md-toolbar-tools">
+            <span><h1>Football Data Angular</h1></span>
+            <span flex></span>
+               <md-button ng-href="#/">Home</md-button>
+        </div>
+    </md-toolbar>
+    <md-content flex md-scroll-y class="md-default-theme">
+        <ng-view></ng-view>
+    </md-content>
+</div>
+
+<script src="dist/js/angular.js"></script>
+<script src="dist/js/main.js"></script>
+
+</body>
+</html>
